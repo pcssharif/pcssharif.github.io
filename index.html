@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en" id="html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Principles of Computer Systems - Sharif University</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        [lang="fa"] body {
+            font-family: 'Vazirmatn', sans-serif;
+            direction: rtl;
+            text-align: right;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #home {
+            background-image: linear-gradient(to right, rgb(0 0 0 / 90%), rgba(255, 255, 255, 0.3)), url('./imgs/bg1.jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 100vh;
+        }
+        .dark #home {
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.3)), url('./imgs/bg1.jpg');
+        }
+        .dark {
+            background-color: #212529;
+            color: #f8f9fa;
+        }
+        .dark .card {
+            background-color: #343a40;
+            color: #f8f9fa;
+            border-color: #495057;
+        }
+        .dark .table {
+            color: #f8f9fa;
+        }
+        .dark .table-hover tbody tr:hover {
+            background-color: #495057;
+        }
+        .dark .bg-light {
+            background-color: #343a40 !important;
+        }
+        .dark .bg-white {
+            background-color: #212529 !important;
+        }
+        .dark .table-dark {
+            background-color: #495057;
+        }
+        .dark h1, .dark h2 {
+            color: #eef6ff;
+        }
+        .flag {
+            width: 24px;
+            height: 16px;
+            cursor: pointer;
+        }
+        .logo {
+            width: 32px;
+            height: 32px;
+            margin-right: 8px;
+        }
+        .footer-logo {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 8px;
+        }
+        .ta-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        #theme-toggle {
+            font-size: 1.2rem;
+            line-height: 1;
+        }
+        #theme-icon {
+            color: #fff;
+        }
+        #theme-toggle.fallback::before {
+            content: '☀️';
+        }
+        .dark #theme-toggle.fallback::before {
+            content: '🌙';
+        }
+        #loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0d6efd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease-out;
+        }
+        #loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #0d6efd;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Ensure navbar visibility */
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+        .navbar-collapse {
+            transition: height 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-light transition-colors duration-300">
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg bg-primary text-white sticky-top">
+        <div class="container">
+            <a class="navbar-brand text-white" href="#home">
+                <img id="navbar-logo" src="./imgs/light.png" alt="Sharif University Logo" class="logo">
+                <span data-en="PCS Course" data-fa="درس اصول سیستم‌های کامپیوتری">PCS Course</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#home" data-en="Home" data-fa="صفحه اصلی">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#sources" data-en="Sources" data-fa="منابع">Sources</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#sessions" data-en="Sessions" data-fa="جلسات">Sessions</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#researches" data-en="Researches" data-fa="تحقیقات">Researches</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#contact" data-en="Contact" data-fa="تماس">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="#team" data-en="Team" data-fa="تیم درس">Team</a>
+                    </li>
+                    <li class="nav-item d-flex align-items-center">
+                        <img src="https://flagcdn.com/w20/us.png" alt="English" class="flag mx-1" onclick="switchLanguage('en')">
+                        <img src="https://flagcdn.com/w20/ir.png" alt="Persian" class="flag mx-1" onclick="switchLanguage('fa')">
+                    </li>
+                    <li class="nav-item">
+                        <button id="theme-toggle" class="btn btn-primary text-white btn-sm">
+                            <i id="theme-icon" class="bi bi-sun"></i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="d-flex align-items-center text-white">
+        <div class="container fade-in">
+            <h2 class="display-4 fw-bold mb-4" data-en="Principles of Computer Systems (PCS)" data-fa="اصول سیستم‌های کامپیوتری">Principles of Computer Systems (PCS)</h2>
+            <p class="lead mb-4" data-en="Sharif University of Technology" data-fa="دانشگاه صنعتی شریف">Sharif University of Technology</p>
+            <p class="fs-4 mb-5" data-en="Instructor: Dr. Mohammad Khalooei" data-fa="مدرس: دکتر محمد خالوئی">Instructor: Dr. Mohammad Khalooei</p>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <h3 class="h4 fw-semibold mb-3" data-en="Teaching Assistants" data-fa="دستیاران آموزشی">Teaching Assistants</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item bg-transparent border-0 text-white" data-en="Pouria Safaei (Head)" data-fa="پوریا صفایی">پوریا صفایی (Head)</li>
+                        <li class="list-group-item bg-transparent border-0 text-white" data-en="Hossein Shahbazi" data-fa="حسین شهبازی">حسین شهبازی</li>
+                        <li class="list-group-item bg-transparent border-0 text-white" data-en="MohammadReza Zia" data-fa="محمدرضا ضیا">محمدرضا ضیا</li>
+                        <li class="list-group-item bg-transparent border-0 text-white" data-en="Maryam Asgarinejad" data-fa="مریم عسگری نژاد">مریم عسگری نژاد</li>
+                        <li class="list-group-item bg-transparent border-0 text-white" data-en="Sogol Zamanian" data-fa="سوگول زمانیان">سوگول زمانیان</li>
+                        <li class="list-group-item bg-transparent border-0 text-white" data-en="Nima Alizadeh" data-fa="نیما علیزاده">نیما علیزاده</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sources" class="py-5 bg-white">
+        <div class="container fade-in">
+            <h2 class="h2 text-center mb-5" data-en="Course Sources" data-fa="منابع درس">Course Sources</h2>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title h5" data-en="Reference" data-fa="مرجع">Reference</h3>
+                            <p class="card-text"><a href="#" class="text-primary text-decoration-underline" data-en="Computer Systems: A Programmer's Perspective" data-fa="Logic & Computer Design Fundamentals">Logic & Computer Design Fundamentals</a></p>
+                            <p class="card-text"><a href="#" class="text-primary text-decoration-underline" data-en="Computer Organization and Design MIPS Edition: The Hardware/Software Interface" data-fa="Computer Organization and Design MIPS Edition: The Hardware/Software Interface">Computer Organization and Design MIPS Edition: The Hardware/Software Interface</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sessions" class="py-5 bg-light">
+        <div class="container fade-in">
+            <h2 class="h2 text-center mb-5" data-en="Course Sessions" data-fa="جلسات درس">Course Sessions</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" data-en="Topic" data-fa="محور">محور</th>
+                            <th scope="col" data-en="Slides" data-fa="اسلایدها">اسلایدها</th>
+                            <th scope="col" data-en="Video" data-fa="ویدئو">ویدئو</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-en="Course Introduction / Prerequisites and History" data-fa="مباحث کلی شروع درس / مقدمه و تاریخچه مبانی لازم برای درس">مباحث کلی شروع درس / مقدمه و تاریخچه مبانی لازم برای درس</td>
+                            <td><a href="./slides/lecture01.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Logic Circuits" data-fa="مدار منطقی">مدار منطقی</td>
+                            <td><a href="./slides/lecture-dd.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Combinational Logic Design and Sequential Circuits" data-fa="طراحی منطقی ترکیبی و مدارهای ترتیبی">طراحی منطقی ترکیبی و مدارهای ترتیبی</td>
+                            <td><a href="./slides/chapter03.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Sequential Circuits" data-fa="مدارهای ترتیبی">مدارهای ترتیبی</td>
+                            <td><a href="./slides/chapter04.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Registers and Counters" data-fa="ثبات ها و شمارنده ها">ثبات ها و شمارنده ها</td>
+                            <td><a href="./slides/chapter05.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Computer Design Basics" data-fa="مبانی طراحی کامپیوتر">مبانی طراحی کامپیوتر</td>
+                            <td><a href="./slides/chapter06.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Instruction Set Architecture" data-fa="معماری مجموعه دستورالعمل‌ها">معماری مجموعه دستورالعمل‌ها</td>
+                            <td><a href="./slides/chapter07.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="MIPS Architecture and Related Concepts" data-fa="معماری MIPS و مفاهیم مرتبط">معماری MIPS و مفاهیم مرتبط</td>
+                            <td><a href="./slides/chapter08.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Program Execution" data-fa="اجرای برنامه">اجرای برنامه</td>
+                            <td><a href="./slides/chapter09.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Memory" data-fa="حافظه">حافظه</td>
+                            <td><a href="./slides/chapter10.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Input/Output" data-fa="ورودی/خروجی">ورودی/خروجی</td>
+                            <td><a href="./slides/chapter11.pdf" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="researches" class="py-5 bg-white">
+        <div class="container fade-in">
+            <h2 class="h2 text-center mb-5" data-en="Student Researches & Presentations" data-fa="تحقیقات و ارائه‌های دانشجویی">Student Researches & Presentations</h2>
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col" data-en="Topic" data-fa="موضوع">موضوع</th>
+                            <th scope="col" data-en="Presenter(s)" data-fa="ارائه‌دهنده(ها)">ارائه‌دهنده(ها)</th>
+                            <th scope="col" data-en="Slides" data-fa="اسلایدها">اسلایدها</th>
+                            <th scope="col" data-en="Video" data-fa="ویدئو">ویدئو</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-en="Parallel Processing and Multithreading" data-fa="پردازش موازی و چند تردی بودن">پردازش موازی و چند تردی بودن</td>
+                            <td>مهدی سلیمان زاده</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Introduction to MIPS and 8086 Processors with Programming Examples" data-fa="مقدمه ای بر پردازنده MIPS و 8086 به همراه چند مثال برنامه نویسی از نصب و راه اندازی تا کدنویسی چند مثال ساده و متوسط">مقدمه ای بر پردازنده MIPS و 8086 به همراه چند مثال برنامه نویسی از نصب و راه اندازی تا کدنویسی چند مثال ساده و متوسط</td>
+                            <td>آقایان ملک‌حسینی و آسوده</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="ARM Architecture Review, Workflow, and Evolution" data-fa="بررسی معماری ARM و روال کار با آن و گذر بر نسل های جدید آن و پاسخ به چرا ARM?">بررسی معماری ARM و روال کار با آن و گذر بر نسل های جدید آن و پاسخ به چرا ARM?</td>
+                            <td>محسن بهزاداصل، دانیال درودی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Solving Pipelining Problems" data-fa="حل مشکلات Pipelining">حل مشکلات Pipelining</td>
+                            <td>محمدپارسا طالبی زاده، مبین یوسفی، مهرشاد حقیقت</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="FPGA Workflow, Evolution, and Comparison with Conventional Processors" data-fa="FPGA و کار با آن و گذر بر نسل های جدید آن و پاسخ به چرا FPGA؟، تفاوت با پردازنده های متداول، چند کد نمونه">FPGA و کار با آن و گذر بر نسل های جدید آن و پاسخ به چرا FPGA؟، تفاوت با پردازنده های متداول، چند کد نمونه</td>
+                            <td>محمد عرفان عمو، محمدباقر برکند</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Memory Types and Their Interaction with Processors" data-fa="حافظه و انواع آن (عادی، سروری و نسل های جدید، چرا تنوع؟) و روال تعامل هر یک با پردازنده">حافظه و انواع آن (عادی، سروری و نسل های جدید، چرا تنوع؟) و روال تعامل هر یک با پردازنده</td>
+                            <td>صبا کلانتری، شایان صالحی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="I/O Channels in Computer Systems" data-fa="انواع دالان های ورودی خروجی سیستم های کامپیوتری مختلف از کوچکترین کامپیوتر در کاربردهای مختلف تا پیچیده‌ترین آن">انواع دالان های ورودی خروجی سیستم های کامپیوتری مختلف از کوچکترین کامپیوتر در کاربردهای مختلف تا پیچیده‌ترین آن</td>
+                            <td>یگانه حاتم‌پور جزی، کژال باغستانی، زینب آشوری</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="RISC-V and M2-Based Processors" data-fa="RISC V و پردازنده های M2 based">RISC V و پردازنده های M2 based</td>
+                            <td>علی صادقی، علیرضا احمدی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="GPU Architectures and Their Differences from CPUs" data-fa="بررسی معماری‌های گرافیکی (GPU) و تفاوت آن‌ها با CPU">بررسی معماری‌های گرافیکی (GPU) و تفاوت آن‌ها با CPU</td>
+                            <td>نادیا افسر، سارا محمدی محمدی، موژان هماوندی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Machine Learning in Circuit and Processor Design Optimization with Focus on Google TPU" data-fa="چگونگی استفاده از یادگیری ماشین در بهینه‌سازی طراحی مدارهای منطقی یا پردازنده‌ها با محوریت صحبت در خصوص Google TPU">چگونگی استفاده از یادگیری ماشین در بهینه‌سازی طراحی مدارهای منطقی یا پردازنده‌ها با محوریت صحبت در خصوص Google TPU</td>
+                            <td>مهدی سلحشور، نوید فضلی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="NVIDIA Grace Hopper Superchip" data-fa="NVIDIA Grace Hopper Superchip">NVIDIA Grace Hopper Superchip</td>
+                            <td>کسری اعرابی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Embedded Systems Concepts and Applications (e.g., Arduino, Raspberry Pi)" data-fa="مفاهیم و کاربردهای سیستم‌های نهفته (Embedded Systems) مثل Arduino یا Raspberry Pi و توضیح المان‌ها و مفاهیم مرتبط با درس در آنها، نحوه مدیریت وقفه‌ها و ورودی خروجی‌ها">مفاهیم و کاربردهای سیستم‌های نهفته (Embedded Systems) مثل Arduino یا Raspberry Pi و توضیح المان‌ها و مفاهیم مرتبط با درس در آنها، نحوه مدیریت وقفه‌ها و ورودی خروجی‌ها</td>
+                            <td>پوریا جلالی فراهانی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Java Virtual Machine and Python Virtual Machine" data-fa="Java Virtual Machine و Python Virtual Machine">Java Virtual Machine و Python Virtual Machine</td>
+                            <td>علیرضا وصالی، هیراد باقری</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                        <tr>
+                            <td data-en="Next-Generation Computer Systems with Focus on Quantum Computing" data-fa="نسل جدید سیستم‌های کامپیوتری با محوریت محاسبات کوانتومی">نسل جدید سیستم‌های کامپیوتری با محوریت محاسبات کوانتومی</td>
+                            <td>ارشیا دهقان، ابوالفضل مسلمی</td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Slides" data-fa="اسلایدها">اسلایدها</a></td>
+                            <td><a href="#" class="text-primary text-decoration-underline" data-en="Video" data-fa="ویدئو">ویدئو</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="py-5 bg-light">
+        <div class="container fade-in">
+            <h2 class="h2 text-center mb-5" data-en="Our Team" data-fa="تیم درس ما">Our Team</h2>
+            <div class="row">
+                <div class="col-md-5 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <img src="imgs/user.jpg" alt="Dr. Mohammad Khalooei" class="card-img-top mx-auto mt-3" style="width: 128px; height: 128px; border-radius: 50%;">
+                        <div class="card-body text-center">
+                            <h3 class="card-title h5" data-en="Instructor: Dr. Mohammad Khalooei" data-fa="مدرس: دکتر محمد خالوئی">Instructor: Dr. Mohammad Khalooei</h3>
+                            <p class="card-text"><a href="mailto:mohammad.khalooei@sharif.edu" class="text-primary text-decoration-underline">mohammad.khalooei [at] sharif.edu</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-7 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title h5 mb-3" data-en="Teaching Assistants" data-fa="دستیاران آموزشی">Teaching Assistants</h3>
+                            <div class="row row-cols-2 g-3">
+                                <div class="col">
+                                    <div class="d-flex align-items-center">
+                                        <img src="./imgs/user.jpg" alt="پوریا صفایی" class="ta-img me-2">
+                                        <span data-en="Pouria Safaei (Head)" data-fa="پوریا صفایی">پوریا صفایی (Head)</span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="d-flex align-items-center">
+                                        <img src="./imgs/user.jpg" alt="حسین شهبازی" class="ta-img me-2">
+                                        <span data-en="Hossein Shahbazi" data-fa="حسین شهبازی">حسین شهبازی</span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="d-flex align-items-center">
+                                        <img src="./imgs/user.jpg" alt="محمدرضا ضیا" class="ta-img me-2">
+                                        <span data-en="MohammadReza Zia" data-fa="محمدرضا ضیا">محمدرضا ضیا</span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="d-flex align-items-center">
+                                        <img src="./imgs/user.jpg" alt="مریم عسگری نژاد" class="ta-img me-2">
+                                        <span data-en="Maryam Asgarinejad" data-fa="مریم عسگری نژاد">مریم عسگری نژاد</span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="d-flex align-items-center">
+                                        <img src="./imgs/user.jpg" alt="سوگول زمانیان" class="ta-img me-2">
+                                        <span data-en="Sogol Zamanian" data-fa="سوگول زمانیان">سوگول زمانیان</span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="d-flex align-items-center">
+                                        <img src="./imgs/user.jpg" alt="نیما علیزاده" class="ta-img me-2">
+                                        <span data-en="Nima Alizadeh" data-fa="نیما علیزاده">نیما علیزاده</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-5 bg-white">
+        <div class="container fade-in">
+            <h2 class="h2 text-center mb-5" data-en="Contact Us" data-fa="تماس با ما">Contact Us</h2>
+            <div class="card mx-auto shadow-sm" style="max-width: 500px;">
+                <div class="card-body">
+                    <p class="card-text" data-en="Instructor: Dr. Mohammad Khalooei" data-fa="استاد: دکتر محمد خالوئی">Instructor: Dr. Mohammad Khalooei</p>
+                    <p class="card-text"><strong data-en="Email" data-fa="ایمیل">Email:</strong> <a href="mailto:mohammad.khalooei@sharif.edu" class="text-primary text-decoration-underline">mohammad.khalooei@sharif.edu</a></p>
+                    <p class="card-text" data-en="Head TA: Pouria Safaei" data-fa="دستیار ارشد: پوریا صفایی">Head TA: پوریا صفایی</p>
+                    <p class="card-text"><strong data-en="Email" data-fa="ایمیل">Email:</strong> <a href="mailto:psafaei@sharif.edu" class="text-primary text-decoration-underline">psafaei@sharif.edu</a></p>
+                    <p class="card-text" data-en="Office Hours: By appointment" data-fa="ساعات اداری: با قرار قبلی">Office Hours: By appointment</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-primary text-white py-4 text-center">
+        <div class="container">
+            <img id="footer-logo" src="https://icon2.cleanpng.com/20180606/hyk/kisspng-logo-sharif-university-of-technology-organization-5b17bbab7e3ec3.1562968615282820275171.jpg" alt="Sharif University Logo" class="footer-logo d-inline-block mb-2">
+            <p data-en="© 2025 Principles of Computer Systems, Sharif University of Technology" data-fa="© 1404 اصول سیستم‌های کامپیوتری، دانشگاه صنعتی شریف">© 2025 Principles of Computer Systems, Sharif University of Technology</p>
+        </div>
+    </footer>
+
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Debug Bootstrap JS loading
+        if (typeof bootstrap === 'undefined') {
+            console.error('Bootstrap JavaScript not loaded');
+        } else {
+            console.log('Bootstrap JavaScript loaded successfully');
+        }
+
+        function switchLanguage(lang) {
+            document.documentElement.setAttribute('lang', lang);
+            document.querySelectorAll('[data-en][data-fa]').forEach(el => {
+                el.textContent = el.getAttribute(`data-${lang}`);
+            });
+            localStorage.setItem('language', lang);
+        }
+
+        const savedLang = localStorage.getItem('language') || 'fa';
+        switchLanguage(savedLang);
+
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+        const html = document.getElementById('html');
+        const navbarLogo = document.getElementById('navbar-logo');
+        const footerLogo = document.getElementById('footer-logo');
+        const whiteLogo = './imgs/light.png';
+        const darkLogo = './imgs/sharif-logo-png-transparent.png';
+
+        function setTheme(theme) {
+            try {
+                if (theme === 'dark') {
+                    html.classList.add('dark');
+                    themeIcon.className = 'bi bi-moon-stars';
+                    navbarLogo.src = darkLogo;
+                    footerLogo.src = darkLogo;
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    html.classList.remove('dark');
+                    themeIcon.className = 'bi bi-brightness-high';
+                    navbarLogo.src = whiteLogo;
+                    footerLogo.src = whiteLogo;
+                    localStorage.setItem('theme', 'light');
+                }
+                if (!document.querySelector('.bi')) {
+                    console.warn('Bootstrap Icons not loaded, applying fallback');
+                    themeToggle.classList.add('fallback');
+                }
+            } catch (error) {
+                console.error('Error setting theme:', error);
+            }
+        }
+
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const savedTheme = localStorage.getItem('theme') || (prefersDark ? 'dark' : 'light');
+        setTheme(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = html.classList.contains('dark') ? 'dark' : 'light';
+            setTheme(currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(element => observer.observe(element));
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
